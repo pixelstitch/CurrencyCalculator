@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D8F5EA23-0307-484E-A607-0ED2550B33AB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CurrencyCalculator</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>88089E1F7A6B600811531330B94EEC26253C3EBA</key>
+		<string>ssh://github.com/pixelstitch/CurrencyCalculator.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CurrencyCalculator.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>88089E1F7A6B600811531330B94EEC26253C3EBA</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/pixelstitch/CurrencyCalculator.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>88089E1F7A6B600811531330B94EEC26253C3EBA</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>88089E1F7A6B600811531330B94EEC26253C3EBA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CurrencyCalculator</string>
+		</dict>
+	</array>
+</dict>
+</plist>
