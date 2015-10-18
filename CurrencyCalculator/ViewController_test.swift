@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController_test: UIViewController, UIScrollViewDelegate {
+class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDelegate {
 
 //    var scrollView: UIScrollView!
 	var topScrollView:UIScrollView = UIScrollView()
@@ -22,44 +22,72 @@ class ViewController_test: UIViewController, UIScrollViewDelegate {
 		let screenSize: CGRect = UIScreen.mainScreen().bounds
 		let screenWidth = screenSize.width
 		let screenHeight = screenSize.height
-        //1
-//        self.scrollView.frame = CGRectMake(0, 0, 200, 200)
-//		self.scrollView.frame = CGRectMake(0, 0, self.view.frame.width, 100)
-//		self.scrollView.backgroundColor = UIColor.blackColor()
-        let scrollViewWidth:CGFloat = 100 //self.scrollView.frame.width
-        let scrollViewHeight:CGFloat = 100 //self.scrollView.frame.height
-		
-//		self.markScrollView.frame = CGRectMake(100, 200, screenWidth, scrollViewHeight)
-//		self.markScrollView.backgroundColor = UIColor.blueColor()
-//		self.view.addSubview(self.markScrollView)
 
+		
+		let textFieldOzzieDollars:UITextField = UITextField(frame: CGRectMake(0, screenHeight * 0.4, screenWidth, screenHeight * 0.2))
+		textFieldOzzieDollars.clearButtonMode = UITextFieldViewMode.WhileEditing;
+		textFieldOzzieDollars.backgroundColor = UIColor.orangeColor()
+		textFieldOzzieDollars.borderStyle = UITextBorderStyle.Line
+		textFieldOzzieDollars.font = UIFont.systemFontOfSize(35)
+		textFieldOzzieDollars.contentVerticalAlignment = .Center
+		textFieldOzzieDollars.contentHorizontalAlignment = .Center
+		textFieldOzzieDollars.textAlignment = .Center
+		textFieldOzzieDollars.autocorrectionType = UITextAutocorrectionType.No
+		textFieldOzzieDollars.placeholder = "Enter $AUD"
+		textFieldOzzieDollars.returnKeyType = UIReturnKeyType.Done
+		textFieldOzzieDollars.adjustsFontSizeToFitWidth = true
+		textFieldOzzieDollars.delegate = self
+		textFieldOzzieDollars.keyboardType = UIKeyboardType.NumberPad
+		self.view.addSubview(textFieldOzzieDollars)
+		
+//		self.setupScrollingButtons()
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+	
+	
+	func setupScrollingButtons(){
+		//1
+		//        self.scrollView.frame = CGRectMake(0, 0, 200, 200)
+		//		self.scrollView.frame = CGRectMake(0, 0, self.view.frame.width, 100)
+		//		self.scrollView.backgroundColor = UIColor.blackColor()
+		let scrollViewWidth:CGFloat = 100 //self.scrollView.frame.width
+		let scrollViewHeight:CGFloat = 100 //self.scrollView.frame.height
+		
+		//		self.markScrollView.frame = CGRectMake(100, 200, screenWidth, scrollViewHeight)
+		//		self.markScrollView.backgroundColor = UIColor.blueColor()
+		//		self.view.addSubview(self.markScrollView)
+		
 		self.topScrollView.frame = CGRectMake(50, 300, 100, scrollViewHeight)
 		self.topScrollView.backgroundColor = UIColor.blueColor()
 		self.view.addSubview(self.topScrollView)
-
+		
 		var offestNumber1:CGFloat = 0
 		var offestNumber2:CGFloat = 0
 		
-//		var but1:UIButton = UIButton(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
-//		but1.backgroundColor = UIColor.orangeColor()
-//		but1.setTitle("Button One", forState: UIControlState.Normal)
-//		self.scrollView.addSubview(but1)
-//		
-//		var but2:UIButton = UIButton(frame: CGRectMake(scrollViewWidth, 0,scrollViewWidth, scrollViewHeight))
-//		but2.backgroundColor = UIColor.greenColor()
-//		but2.setTitle("Button Two", forState: UIControlState.Normal)
-//		self.scrollView.addSubview(but2)
-//		
-//		var but3:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*2, 0,scrollViewWidth, scrollViewHeight))
-//		but3.backgroundColor = UIColor.redColor()
-//		but3.setTitle("Button Three", forState: UIControlState.Normal)
-//		self.scrollView.addSubview(but3)
-//		
-//		var but4:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
-//		but4.backgroundColor = UIColor.yellowColor()
-//		but4.setTitle("Button Three", forState: UIControlState.Normal)
-//		self.scrollView.addSubview(but4)
-//		=========================
+		//		var but1:UIButton = UIButton(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
+		//		but1.backgroundColor = UIColor.orangeColor()
+		//		but1.setTitle("Button One", forState: UIControlState.Normal)
+		//		self.scrollView.addSubview(but1)
+		//
+		//		var but2:UIButton = UIButton(frame: CGRectMake(scrollViewWidth, 0,scrollViewWidth, scrollViewHeight))
+		//		but2.backgroundColor = UIColor.greenColor()
+		//		but2.setTitle("Button Two", forState: UIControlState.Normal)
+		//		self.scrollView.addSubview(but2)
+		//
+		//		var but3:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*2, 0,scrollViewWidth, scrollViewHeight))
+		//		but3.backgroundColor = UIColor.redColor()
+		//		but3.setTitle("Button Three", forState: UIControlState.Normal)
+		//		self.scrollView.addSubview(but3)
+		//
+		//		var but4:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
+		//		but4.backgroundColor = UIColor.yellowColor()
+		//		but4.setTitle("Button Three", forState: UIControlState.Normal)
+		//		self.scrollView.addSubview(but4)
+		//		=========================
 		var but1Top:UIButton = UIButton(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
 		but1Top.backgroundColor = UIColor.orangeColor()
 		but1Top.setTitle("Button One", forState: UIControlState.Normal)
@@ -94,39 +122,34 @@ class ViewController_test: UIViewController, UIScrollViewDelegate {
 		but3a.backgroundColor = UIColor.redColor()
 		but3a.setTitle("Button Three", forState: UIControlState.Normal)
 		self.markScrollView.addSubview(but3a)
-
+		
 		var but4a:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
 		but4a.backgroundColor = UIColor.yellowColor()
 		but4a.setTitle("Button Three", forState: UIControlState.Normal)
 		self.markScrollView.addSubview(but4a)
-
-        //4
-//		println("scrollViewWidth: \(scrollViewWidth) -=- \((scrollViewWidth) * 4)")
-////        self.scrollView.contentSize = CGSizeMake(500, self.scrollView.frame.height)
-//		self.scrollView.contentSize = CGSizeMake((scrollViewWidth) * 4, self.scrollView.frame.height)
-//        self.scrollView.delegate = self
-//		self.scrollView.pagingEnabled = true
-//		self.scrollView.scrollEnabled = true
-	
+		
+		//4
+		//		println("scrollViewWidth: \(scrollViewWidth) -=- \((scrollViewWidth) * 4)")
+		////        self.scrollView.contentSize = CGSizeMake(500, self.scrollView.frame.height)
+		//		self.scrollView.contentSize = CGSizeMake((scrollViewWidth) * 4, self.scrollView.frame.height)
+		//        self.scrollView.delegate = self
+		//		self.scrollView.pagingEnabled = true
+		//		self.scrollView.scrollEnabled = true
+		
 		self.topScrollView.contentSize = CGSizeMake((scrollViewWidth) * 4, self.topScrollView.frame.height)
 		self.topScrollView.delegate = self
 		self.topScrollView.pagingEnabled = true
 		self.topScrollView.scrollEnabled = true
 		self.topScrollView.showsHorizontalScrollIndicator = false
 		self.topScrollView.contentOffset = CGPoint(x: self.topScrollView.contentOffset.x - 100, y: self.topScrollView.contentOffset.y)
-
+		
 		self.markScrollView.contentSize = CGSizeMake((scrollViewWidth) * 4, self.topScrollView.frame.height)
 		self.markScrollView.delegate = self
 		self.markScrollView.alpha = 0.5
 		self.markScrollView.contentOffset = CGPoint(x: self.markScrollView.contentOffset.x - 100, y: self.markScrollView.contentOffset.y)
 		self.markScrollView.pagingEnabled = true
 		self.markScrollView.scrollEnabled = true
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+	}
 	
 	
     //MARK: UIScrollViewDelegate
