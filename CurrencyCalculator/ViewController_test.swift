@@ -15,16 +15,56 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
 	var markScrollView:UIScrollView = UIScrollView()
 	
 	var originalPosition:CGFloat = 0
+
+	let screenSize: CGRect = UIScreen.mainScreen().bounds
+//	let screenWidth = screenSize.width
+//	let screenHeight = screenSize.height
 	
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-		let screenSize: CGRect = UIScreen.mainScreen().bounds
-		let screenWidth = screenSize.width
-		let screenHeight = screenSize.height
 
 		
-		let textFieldOzzieDollars:UITextField = UITextField(frame: CGRectMake(0, screenHeight * 0.4, screenWidth, screenHeight * 0.2))
+		self.createTextField()
+//		self.setupScrollingButtons()
+		
+		
+//		var masterView:UIView = UIView()
+//		masterView.backgroundColor = UIColor.yellowColor()
+//		masterView.frame = CGRectMake(0, 50, screenSize.width, screenSize.height*0.5)
+//		
+//		var indicatorDown = UIImage(named: "indicatorDown")
+//		var indicatorUp = UIImage(named: "indicatorUp")
+//		
+//		var indicatorDownImageView = UIImageView(image: indicatorDown)
+//		var indicatorDownImageSize:CGSize = CGSizeMake(indicatorDownImageView.bounds.width, indicatorDownImageView.bounds.height)
+//		indicatorDownImageView.frame = CGRectMake(masterView.bounds.width/2 - indicatorDownImageSize.width/2, 50, indicatorDownImageSize.width, indicatorDownImageSize.height)
+//		masterView.addSubview(indicatorDownImageView)
+//		
+//		
+//		var indicatorUpImageView = UIImageView(image: indicatorUp)
+//		var indicatorUpImageSize:CGSize = CGSizeMake(indicatorUpImageView.bounds.width, indicatorUpImageView.bounds.height)
+//		indicatorUpImageView.frame = CGRectMake(masterView.bounds.width/2 - indicatorUpImageSize.width/2, 50, indicatorUpImageSize.width, indicatorUpImageSize.height)
+//		masterView.addSubview(indicatorUpImageView)
+//		
+//		//		println("chatImageView.bounds.width \(chatImageView.bounds.width) -=- chatImageView.bounds.height: \(chatImageView.bounds.height)")
+//		//		chatImageView.frame = CGRectMake(50, 50, indicatorUpImageView.bounds.width, indicatorUpImageView.bounds.height)
+//		//		chatImageView.backgroundColor = UIColor.purpleColor()
+//		self.view.addSubview(masterView)
+
+		
+    }
+
+	func formatEnteredData(enteredData:String) -> String {
+//		let largeNumber:CGFloat = CGFloat(enteredData)
+		let largeNumber = NSNumberFormatter().numberFromString(enteredData)
+		var numberFormatter = NSNumberFormatter()
+		numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+		return numberFormatter.stringFromNumber(largeNumber!)!
+	}
+	
+	func createTextField(){
+		let textFieldOzzieDollars:UITextField = UITextField(frame: CGRectMake(0, screenSize.height * 0.4, screenSize.width, screenSize.height * 0.2))
 		textFieldOzzieDollars.clearButtonMode = UITextFieldViewMode.WhileEditing;
 		textFieldOzzieDollars.backgroundColor = UIColor.orangeColor()
 		textFieldOzzieDollars.borderStyle = UITextBorderStyle.Line
@@ -34,15 +74,21 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
 		textFieldOzzieDollars.textAlignment = .Center
 		textFieldOzzieDollars.autocorrectionType = UITextAutocorrectionType.No
 		textFieldOzzieDollars.placeholder = "Enter $AUD"
-		textFieldOzzieDollars.returnKeyType = UIReturnKeyType.Done
+//		textFieldOzzieDollars.inputAccessoryView = 
 		textFieldOzzieDollars.adjustsFontSizeToFitWidth = true
+		textFieldOzzieDollars.keyboardAppearance = .Dark
 		textFieldOzzieDollars.delegate = self
-		textFieldOzzieDollars.keyboardType = UIKeyboardType.NumberPad
+		textFieldOzzieDollars.keyboardType = UIKeyboardType.NumbersAndPunctuation
+		textFieldOzzieDollars.returnKeyType = UIReturnKeyType.Done
 		self.view.addSubview(textFieldOzzieDollars)
-		
-//		self.setupScrollingButtons()
-    }
-
+	}
+	
+	func textFieldShouldReturn(textFieldOzzieDollars: UITextField) -> Bool {   //delegate method
+		textFieldOzzieDollars.resignFirstResponder()
+		println("Hello \(formatEnteredData(textFieldOzzieDollars.text))")
+		return true
+	}
+	
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
