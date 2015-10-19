@@ -25,10 +25,13 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var but4Top:UIButton = UIButton()
 	var fontSize:CGFloat = 30
 	
+	var exchangeRates:[Cashola] = []
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.view.backgroundColor = UIColor.blueColor()
+//		initially - get the current currency information....
+		self.parseCurrencyInformation()
 //		set up a current button so that we know what 
 		self.btnCurrent = self.but0Top
 		for i in 0..<currencies.count{
@@ -104,32 +107,74 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			//			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
 			self.btnCurrent = self.but0Top
+			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
 		case 1:
 			println("1 uno")
 			self.but1Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			//			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
 			self.btnCurrent = self.but1Top
+			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
 		case 2:
 			println("2 dos")
 			self.but2Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			//			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
 			self.btnCurrent = self.but2Top
+			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
 		case 3:
 			println("3 tres")
 			self.but3Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			//			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
 			self.btnCurrent = self.but3Top
+			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
 		case 4:
 			println("4")
 			self.but4Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			//			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
 			self.btnCurrent = self.but4Top
+			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
 		default:
 			println("Something else")
 		}
+	}
+	
+	func parseCurrencyInformation(){
+		var postEndpoint: String = "http://api.fixer.io/latest?base=AUD&symbols=CAD,EUR,GBP,JPY,USD"
+		var urlRequest = NSURLRequest(URL: NSURL(string: postEndpoint)!)
+		NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue(), completionHandler:{
+			(response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+			if let anError = error {
+				// got an error in getting the data, need to handle it
+				println("error calling GET on /posts/1")
+			} else {
+				// parse the result as json, since that's what the API provides
+				var jsonError: NSError?
+				let post = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &jsonError) as! NSDictionary
+				if let aJSONError = jsonError {
+					// got an error while parsing the data, need to handle it
+					println("error parsing /posts/1")
+				} else {
+					if let items = post["rates"] as? NSDictionary {
+						for item in items {
+							println("key: \(item.key)")
+							println("value: \(item.value)")
+							var c:Cashola = Cashola(currencyName: item.key as! String, exchangeRate: CGFloat(item.value as! NSNumber))
+							self.exchangeRates.append(c)
+						}
+					}
+				}
+			}
+		})
+	}
+}
+struct Cashola {
+	var currencyName:String = ""
+	var exchangeRate:CGFloat = 0
+	init(currencyName:String, exchangeRate:CGFloat){
+		self.currencyName = currencyName
+		self.exchangeRate = exchangeRate
 	}
 }
