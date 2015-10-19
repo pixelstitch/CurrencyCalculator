@@ -8,12 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIScrollViewDelegate {
+class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, NSURLConnectionDelegate {
 	
 	var scrollMaster:UIScrollView = UIScrollView()
 	let scrollViewWidth:CGFloat = 110
 	let scrollViewHeight:CGFloat = 100
-
+	var status_height:CGFloat = 0
+	let screenSize: CGRect = UIScreen.mainScreen().bounds
 	var btnCurrent:UIButton = UIButton()
 	var currencies:[String] = ["CAD", "EUR", "GBP", "JPY", "USD"]
 	var currenciesSymbols:[String] = ["$", "€", "£", "¥", "$"]
@@ -24,14 +25,21 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 	var but3Top:UIButton = UIButton()
 	var but4Top:UIButton = UIButton()
 	var fontSize:CGFloat = 30
-	
+	var textFieldOzzieDollars:UITextField = UITextField()
 	var exchangeRates:[Cashola] = []
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		self.view.backgroundColor = UIColor.blueColor()
+		self.view.backgroundColor = UIColor.greenColor()
 //		initially - get the current currency information....
 		self.parseCurrencyInformation()
+//		get the height of the status bar
+		self.status_height = UIApplication.sharedApplication().statusBarFrame.size.height
+//		add the logo
+		self.addLogo()
+//		add the currency entry field...
+		self.createTextField()
+		
 //		set up a current button so that we know what 
 		self.btnCurrent = self.but0Top
 		for i in 0..<currencies.count{
@@ -92,14 +100,37 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 		println(sender.tag)
 	}
 	
+	func textFieldShouldReturn(textFieldOzzieDollars: UITextField) -> Bool {   //delegate method
+		textFieldOzzieDollars.resignFirstResponder()
+		println("Hello: " + formatEnteredData(textFieldOzzieDollars.text, currencySymbol: "$"))
+		return true
+	}
+
+	func formatEnteredData(enteredData:String, currencySymbol:String) -> String {
+		let largeNumber = NSNumberFormatter().numberFromString(enteredData)
+		var numberFormatter = NSNumberFormatter()
+		numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+		return currencySymbol + numberFormatter.stringFromNumber(largeNumber!)!
+	}
+	
+	func determintExchangeRate(enteredData:CGFloat, currencySymbol:String, cashInfo:Cashola) -> String {
+		println("enteredData: \(enteredData) -=- currencySymbol: \(currencySymbol) -=- cashInfo -currencyName: \(cashInfo.currencyName) -=- cashInfo -currencyName: \(cashInfo.exchangeRate)")
+		var largeNumber = enteredData * cashInfo.exchangeRate
+		var numberFormatter = NSNumberFormatter()
+		numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
+		return currencySymbol + numberFormatter.stringFromNumber(largeNumber)!
+	}
+	
 	func scrollViewDidEndDecelerating(scrollView: UIScrollView){
 		// Test the offset and calculate the current page after scrolling ends
 		var pageWidth:CGFloat = CGRectGetWidth(scrollView.frame)
 		var currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
 		var pageWidth1:CGFloat = CGRectGetWidth(self.scrollMaster.frame)
 		var currentPage1:CGFloat = floor((self.scrollMaster.contentOffset.x-pageWidth/2)/pageWidth)+1
-		println("self.topScrollView.contentOffset.x1 \(self.scrollMaster.contentOffset.x) -=- currentPage1: \(currentPage1) -=- pageWidth1: \(pageWidth1)")
-		
+		var currentValue:String = ""
+		if(self.textFieldOzzieDollars.text.isEmpty){
+			self.textFieldOzzieDollars.text = "100"
+		}
 		switch currentPage1 {
 		case 0:
 			println("0 zero")
@@ -107,38 +138,59 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			//			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
 			self.btnCurrent = self.but0Top
-			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
+//			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
+			currentValue = self.determintExchangeRate(
+				CGFloat(NSNumberFormatter().numberFromString(self.textFieldOzzieDollars.text)!),
+				currencySymbol: self.currenciesSymbols[Int(currentPage1)],
+				cashInfo: self.exchangeRates[Int(currentPage1)])
 		case 1:
 			println("1 uno")
 			self.but1Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			//			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
 			self.btnCurrent = self.but1Top
-			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
+//			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
+			currentValue = self.determintExchangeRate(
+				CGFloat(NSNumberFormatter().numberFromString(self.textFieldOzzieDollars.text)!),
+				currencySymbol: self.currenciesSymbols[Int(currentPage1)],
+				cashInfo: self.exchangeRates[Int(currentPage1)])
 		case 2:
 			println("2 dos")
 			self.but2Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			//			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
 			self.btnCurrent = self.but2Top
-			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
+//			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
+			currentValue = self.determintExchangeRate(
+				CGFloat(NSNumberFormatter().numberFromString(self.textFieldOzzieDollars.text)!),
+				currencySymbol: self.currenciesSymbols[Int(currentPage1)],
+				cashInfo: self.exchangeRates[Int(currentPage1)])
 		case 3:
 			println("3 tres")
 			self.but3Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			//			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
 			self.btnCurrent = self.but3Top
-			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
+//			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
+			currentValue = self.determintExchangeRate(
+				CGFloat(NSNumberFormatter().numberFromString(self.textFieldOzzieDollars.text)!),
+				currencySymbol: self.currenciesSymbols[Int(currentPage1)],
+				cashInfo: self.exchangeRates[Int(currentPage1)])
 		case 4:
 			println("4")
 			self.but4Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			//			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
 			self.btnCurrent = self.but4Top
-			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
+//			println(self.currencies[Int(currentPage1)] + " " + self.currenciesSymbols[Int(currentPage1)])
+			currentValue = self.determintExchangeRate(
+				CGFloat(NSNumberFormatter().numberFromString(self.textFieldOzzieDollars.text)!),
+				currencySymbol: self.currenciesSymbols[Int(currentPage1)],
+				cashInfo: self.exchangeRates[Int(currentPage1)])
 		default:
 			println("Something else")
 		}
+		println("currentValue = \(currentValue)")
 	}
 	
 	func parseCurrencyInformation(){
@@ -169,6 +221,41 @@ class ViewController: UIViewController, UIScrollViewDelegate {
 			}
 		})
 	}
+	
+	func createTextField(){
+		self.textFieldOzzieDollars.frame = CGRectMake(0, screenSize.height * 0.3, screenSize.width, screenSize.height * 0.1)
+		self.textFieldOzzieDollars.clearButtonMode = UITextFieldViewMode.WhileEditing;
+		self.textFieldOzzieDollars.backgroundColor = UIColor.greenColor()
+		self.textFieldOzzieDollars.font = UIFont.systemFontOfSize(35)
+		self.textFieldOzzieDollars.contentVerticalAlignment = .Center
+		self.textFieldOzzieDollars.contentHorizontalAlignment = .Center
+		self.textFieldOzzieDollars.textAlignment = .Center
+		self.textFieldOzzieDollars.autocorrectionType = UITextAutocorrectionType.No
+		self.textFieldOzzieDollars.placeholder = "Enter $AUD amount"
+		self.textFieldOzzieDollars.adjustsFontSizeToFitWidth = true
+		self.textFieldOzzieDollars.keyboardAppearance = .Dark
+		self.textFieldOzzieDollars.delegate = self
+		self.textFieldOzzieDollars.keyboardType = UIKeyboardType.NumbersAndPunctuation
+		self.textFieldOzzieDollars.returnKeyType = UIReturnKeyType.Done
+		self.view.addSubview(self.textFieldOzzieDollars)
+	}
+
+	
+	func addLogo(){
+		var logoImage = UIImage(named: "logo")
+		var logoImageView = UIImageView(image: logoImage)
+		var logoImageSize:CGSize = CGSizeMake(logoImageView.bounds.width, logoImageView.bounds.height)
+		logoImageView.frame = CGRectMake(screenSize.width/2 - logoImageSize.width/2, self.status_height, logoImageSize.width, logoImageSize.height)
+		self.view.addSubview(logoImageView)
+		var m:UILabel = UILabel(frame: CGRectMake(0, self.status_height + screenSize.height * 0.1, screenSize.width, 50))
+		m.text = "AUS"
+		m.backgroundColor = UIColor.redColor()
+		m.textAlignment = .Center
+		m.font = UIFont.systemFontOfSize(55)
+		self.view.addSubview(m)
+	}
+
+	
 }
 struct Cashola {
 	var currencyName:String = ""
