@@ -23,11 +23,23 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
-		
+		self.view.backgroundColor = UIColor.blueColor()
+//		let navHeight = self.navigationController!.navigationBar.bounds.height
+		let status_height = UIApplication.sharedApplication().statusBarFrame.size.height
 		self.createTextField()
 //		self.setupScrollingButtons()
 		
+		var logoImage = UIImage(named: "logo")
+		var logoImageView = UIImageView(image: logoImage)
+		var logoImageSize:CGSize = CGSizeMake(logoImageView.bounds.width, logoImageView.bounds.height)
+		logoImageView.frame = CGRectMake(screenSize.width/2 - logoImageSize.width/2, status_height, logoImageSize.width, logoImageSize.height)
+		self.view.addSubview(logoImageView)
+		var m:UILabel = UILabel(frame: CGRectMake(0, status_height + screenSize.height * 0.1, screenSize.width, 50))
+		m.text = "AUS"
+		m.backgroundColor = UIColor.redColor()
+		m.textAlignment = .Center
+		m.font = UIFont.systemFontOfSize(55)
+		self.view.addSubview(m)
 		
 //		var masterView:UIView = UIView()
 //		masterView.backgroundColor = UIColor.yellowColor()
@@ -55,25 +67,25 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
 		
     }
 
-	func formatEnteredData(enteredData:String) -> String {
-//		let largeNumber:CGFloat = CGFloat(enteredData)
+	func formatEnteredData(enteredData:String, currencySymbol:String) -> String {
 		let largeNumber = NSNumberFormatter().numberFromString(enteredData)
 		var numberFormatter = NSNumberFormatter()
 		numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
-		return numberFormatter.stringFromNumber(largeNumber!)!
+		return currencySymbol + numberFormatter.stringFromNumber(largeNumber!)!
 	}
 	
+	
 	func createTextField(){
-		let textFieldOzzieDollars:UITextField = UITextField(frame: CGRectMake(0, screenSize.height * 0.4, screenSize.width, screenSize.height * 0.2))
+		let textFieldOzzieDollars:UITextField = UITextField(frame: CGRectMake(0, screenSize.height * 0.3, screenSize.width, screenSize.height * 0.1))
 		textFieldOzzieDollars.clearButtonMode = UITextFieldViewMode.WhileEditing;
-		textFieldOzzieDollars.backgroundColor = UIColor.orangeColor()
-		textFieldOzzieDollars.borderStyle = UITextBorderStyle.Line
+		textFieldOzzieDollars.backgroundColor = UIColor.greenColor()
+//		textFieldOzzieDollars.borderStyle = UITextBorderStyle.Line
 		textFieldOzzieDollars.font = UIFont.systemFontOfSize(35)
 		textFieldOzzieDollars.contentVerticalAlignment = .Center
 		textFieldOzzieDollars.contentHorizontalAlignment = .Center
 		textFieldOzzieDollars.textAlignment = .Center
 		textFieldOzzieDollars.autocorrectionType = UITextAutocorrectionType.No
-		textFieldOzzieDollars.placeholder = "Enter $AUD"
+		textFieldOzzieDollars.placeholder = "Enter $AUD amount"
 //		textFieldOzzieDollars.inputAccessoryView = 
 		textFieldOzzieDollars.adjustsFontSizeToFitWidth = true
 		textFieldOzzieDollars.keyboardAppearance = .Dark
@@ -85,7 +97,7 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
 	
 	func textFieldShouldReturn(textFieldOzzieDollars: UITextField) -> Bool {   //delegate method
 		textFieldOzzieDollars.resignFirstResponder()
-		println("Hello \(formatEnteredData(textFieldOzzieDollars.text))")
+		println("Hello: " + formatEnteredData(textFieldOzzieDollars.text, currencySymbol: "$"))
 		return true
 	}
 	
@@ -96,7 +108,6 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
 	
 	
 	func setupScrollingButtons(){
-		//1
 		//        self.scrollView.frame = CGRectMake(0, 0, 200, 200)
 		//		self.scrollView.frame = CGRectMake(0, 0, self.view.frame.width, 100)
 		//		self.scrollView.backgroundColor = UIColor.blackColor()
