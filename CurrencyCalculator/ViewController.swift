@@ -26,11 +26,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 	var but4Top:UIButton = UIButton()
 	var fontSize:CGFloat = 30
 	var textFieldOzzieDollars:UITextField = UITextField()
+	var result:UILabel = UILabel()
 	var exchangeRates:[Cashola] = []
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.view.backgroundColor = UIColor.greenColor()
+//		setup initial valuse...
+		self.setupInitialValues()
 //		initially - get the current currency information....
 		self.parseCurrencyInformation()
 //		get the height of the status bar
@@ -39,6 +42,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 		self.addLogo()
 //		add the currency entry field...
 		self.createTextField()
+		
+		
+		self.result.frame = CGRectMake(0, screenSize.height * 0.7, screenSize.width, screenSize.height * 0.1)
+		self.result.textAlignment = .Center
+		self.result.backgroundColor = UIColor.brownColor()
+		self.result.font = UIFont.systemFontOfSize(35)
+		self.result.adjustsFontSizeToFitWidth = true
+		self.view.addSubview(self.result)
 		
 //		set up a current button so that we know what 
 		self.btnCurrent = self.but0Top
@@ -100,12 +111,26 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 		println(sender.tag)
 	}
 	
-	func textFieldShouldReturn(textFieldOzzieDollars: UITextField) -> Bool {   //delegate method
-		textFieldOzzieDollars.resignFirstResponder()
-		println("Hello: " + formatEnteredData(textFieldOzzieDollars.text, currencySymbol: "$"))
+	func textFieldShouldReturn(t:UITextField) -> Bool {   //delegate method
+		t.resignFirstResponder()
+		if(t.text.isEmpty){
+			self.textFieldOzzieDollars.text = "0"
+		} else {
+			var currentButtonNumber = self.btnCurrent.tag
+			self.result.text = self.determintExchangeRate(
+				CGFloat(NSNumberFormatter().numberFromString(
+					self.textFieldOzzieDollars.text)!),
+				currencySymbol: self.currenciesSymbols[Int(currentButtonNumber)],
+				cashInfo: self.exchangeRates[Int(currentButtonNumber)])
+		}
+		println("Hello: " + formatEnteredData(t.text, currencySymbol: "$"))
 		return true
 	}
-
+	
+	func setupInitialValues() {
+		self.result.text = self.formatEnteredData("0", currencySymbol: "$")
+	}
+	
 	func formatEnteredData(enteredData:String, currencySymbol:String) -> String {
 		let largeNumber = NSNumberFormatter().numberFromString(enteredData)
 		var numberFormatter = NSNumberFormatter()
@@ -129,7 +154,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 		var currentPage1:CGFloat = floor((self.scrollMaster.contentOffset.x-pageWidth/2)/pageWidth)+1
 		var currentValue:String = ""
 		if(self.textFieldOzzieDollars.text.isEmpty){
-			self.textFieldOzzieDollars.text = "100"
+			self.textFieldOzzieDollars.text = "0"
 		}
 		switch currentPage1 {
 		case 0:
@@ -191,6 +216,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 			println("Something else")
 		}
 		println("currentValue = \(currentValue)")
+		self.result.text = currentValue
 	}
 	
 	func parseCurrencyInformation(){
@@ -230,8 +256,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 		self.textFieldOzzieDollars.contentVerticalAlignment = .Center
 		self.textFieldOzzieDollars.contentHorizontalAlignment = .Center
 		self.textFieldOzzieDollars.textAlignment = .Center
+		self.textFieldOzzieDollars.text = "0"
 		self.textFieldOzzieDollars.autocorrectionType = UITextAutocorrectionType.No
-		self.textFieldOzzieDollars.placeholder = "Enter $AUD amount"
+//		self.textFieldOzzieDollars.placeholder = "Enter $AUD amount"
 		self.textFieldOzzieDollars.adjustsFontSizeToFitWidth = true
 		self.textFieldOzzieDollars.keyboardAppearance = .Dark
 		self.textFieldOzzieDollars.delegate = self
