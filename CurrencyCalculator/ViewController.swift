@@ -73,8 +73,21 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 			}
 		}
 		
-		var m:UIView = UIView(frame: CGRectMake(0, screenSize.height * 0.45, screenSize.width, screenSize.height * 0.2))
-		m.backgroundColor = self.selectionGreen
+		var m:UIView = UIView(frame: CGRectMake(0, screenSize.height * 0.45, screenSize.width, screenSize.height * 0.15))
+		m.backgroundColor = UIColor.redColor()
+		var indicatorDown = UIImage(named: "indicatorDown")
+		var indicatorUp = UIImage(named: "indicatorUp")
+		
+		var indicatorDownImageView = UIImageView(image: indicatorDown)
+		var indicatorDownImageSize:CGSize = CGSizeMake(indicatorDownImageView.bounds.width, indicatorDownImageView.bounds.height)
+		indicatorDownImageView.frame = CGRectMake(m.bounds.width/2 - indicatorDownImageSize.width/2, 0 - indicatorDownImageSize.height/2, indicatorDownImageSize.width, indicatorDownImageSize.height)
+		m.addSubview(indicatorDownImageView)
+		
+		var indicatorUpImageView = UIImageView(image: indicatorUp)
+		var indicatorUpImageSize:CGSize = CGSizeMake(indicatorUpImageView.bounds.width, indicatorUpImageView.bounds.height)
+		indicatorUpImageView.frame = CGRectMake(m.bounds.width/2 - indicatorUpImageSize.width/2, m.bounds.height - indicatorDownImageSize.height/2, indicatorUpImageSize.width, indicatorUpImageSize.height)
+		m.addSubview(indicatorUpImageView)
+		
 		
 		self.scrollMaster.frame = CGRectMake(100, screenSize.height * 0.45, 110, self.scrollViewHeight)
 		self.scrollMaster.contentSize = CGSizeMake((self.scrollViewWidth) * CGFloat(self.currencies.count), self.scrollMaster.frame.height)
