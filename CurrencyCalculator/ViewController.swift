@@ -362,7 +362,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 		
 		let imageSize = CGSize(width: screenSize.width, height: screenSize.height * 0.1)
 		let imageView = UIImageView(frame: CGRectMake(0, screenSize.height * 0.4, imageSize.width, imageSize.height))
-		imageView.backgroundColor = UIColor.yellowColor()
+//		imageView.backgroundColor = UIColor.yellowColor()
 		self.view.addSubview(imageView)
 		let image = drawCustomImage(imageSize)
 		imageView.image = image
