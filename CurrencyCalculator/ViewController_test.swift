@@ -17,29 +17,15 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
 	var originalPosition:CGFloat = 0
 
 	let screenSize: CGRect = UIScreen.mainScreen().bounds
-//	let screenWidth = screenSize.width
-//	let screenHeight = screenSize.height
+	var status_height:CGFloat = 0
 	
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 		self.view.backgroundColor = UIColor.blueColor()
-//		let navHeight = self.navigationController!.navigationBar.bounds.height
-		let status_height = UIApplication.sharedApplication().statusBarFrame.size.height
 		self.createTextField()
 //		self.setupScrollingButtons()
-		
-		var logoImage = UIImage(named: "logo")
-		var logoImageView = UIImageView(image: logoImage)
-		var logoImageSize:CGSize = CGSizeMake(logoImageView.bounds.width, logoImageView.bounds.height)
-		logoImageView.frame = CGRectMake(screenSize.width/2 - logoImageSize.width/2, status_height, logoImageSize.width, logoImageSize.height)
-		self.view.addSubview(logoImageView)
-		var m:UILabel = UILabel(frame: CGRectMake(0, status_height + screenSize.height * 0.1, screenSize.width, 50))
-		m.text = "AUS"
-		m.backgroundColor = UIColor.redColor()
-		m.textAlignment = .Center
-		m.font = UIFont.systemFontOfSize(55)
-		self.view.addSubview(m)
+		self.status_height = UIApplication.sharedApplication().statusBarFrame.size.height
 		
 //		var masterView:UIView = UIView()
 //		masterView.backgroundColor = UIColor.yellowColor()
@@ -72,6 +58,20 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
 		var numberFormatter = NSNumberFormatter()
 		numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
 		return currencySymbol + numberFormatter.stringFromNumber(largeNumber!)!
+	}
+	
+	func addLogo(){
+		var logoImage = UIImage(named: "logo")
+		var logoImageView = UIImageView(image: logoImage)
+		var logoImageSize:CGSize = CGSizeMake(logoImageView.bounds.width, logoImageView.bounds.height)
+		logoImageView.frame = CGRectMake(screenSize.width/2 - logoImageSize.width/2, self.status_height, logoImageSize.width, logoImageSize.height)
+		self.view.addSubview(logoImageView)
+		var m:UILabel = UILabel(frame: CGRectMake(0, self.status_height + screenSize.height * 0.1, screenSize.width, 50))
+		m.text = "AUS"
+		m.backgroundColor = UIColor.redColor()
+		m.textAlignment = .Center
+		m.font = UIFont.systemFontOfSize(55)
+		self.view.addSubview(m)
 	}
 	
 	
