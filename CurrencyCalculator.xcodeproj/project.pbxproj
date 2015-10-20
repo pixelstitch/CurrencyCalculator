@@ -13,6 +13,7 @@
 		4D92D8C31BD241540076201A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D92D8C21BD241540076201A /* Images.xcassets */; };
 		4D92D8C61BD241540076201A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D92D8C41BD241540076201A /* LaunchScreen.xib */; };
 		4D92D8D21BD241540076201A /* CurrencyCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D92D8D11BD241540076201A /* CurrencyCalculatorTests.swift */; };
+		4D9CA06A1BD323D6002DDA57 /* ViewController_test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9CA0691BD323D6002DDA57 /* ViewController_test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		4D92D8CB1BD241540076201A /* CurrencyCalculatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurrencyCalculatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D92D8D01BD241540076201A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D92D8D11BD241540076201A /* CurrencyCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyCalculatorTests.swift; sourceTree = "<group>"; };
+		4D9CA0691BD323D6002DDA57 /* ViewController_test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		4D92D8B81BD241540076201A /* CurrencyCalculator */ = {
 			isa = PBXGroup;
 			children = (
+				4D9CA0691BD323D6002DDA57 /* ViewController_test.swift */,
 				4D92D8BB1BD241540076201A /* AppDelegate.swift */,
 				4D92D8BD1BD241540076201A /* ViewController.swift */,
 				4D92D8BF1BD241540076201A /* Main.storyboard */,
@@ -212,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D9CA06A1BD323D6002DDA57 /* ViewController_test.swift in Sources */,
 				4D92D8BE1BD241540076201A /* ViewController.swift in Sources */,
 				4D92D8BC1BD241540076201A /* AppDelegate.swift in Sources */,
 			);
@@ -411,6 +415,7 @@
 				4D92D8D71BD241540076201A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4D92D8D81BD241540076201A /* Build configuration list for PBXNativeTarget "CurrencyCalculatorTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +424,7 @@
 				4D92D8DA1BD241540076201A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
