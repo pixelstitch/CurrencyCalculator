@@ -55,7 +55,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 	
 
 		
-		println("screenSize.width: \(screenSize.width) -=- screenSize.height: \(screenSize.height)")
+		print("screenSize.width: \(screenSize.width) -=- screenSize.height: \(screenSize.height)")
 //		set up a current button so that we know what 
 		self.btnCurrent = self.but0Top
 		for i in 0..<currencies.count{
@@ -76,22 +76,22 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 //				println("4")
 				self.buttonSetup(CGFloat(i), but: self.but4Top, currencyTicker: currencies[i])
 			default:
-				println("Something went wrong... not good...")
+				print("Something went wrong... not good...")
 			}
 		}
 		
-		var m:UIView = UIView(frame: CGRectMake(0, screenSize.height * 0.45, screenSize.width, screenSize.height * 0.15))
+		let m:UIView = UIView(frame: CGRectMake(0, screenSize.height * 0.45, screenSize.width, screenSize.height * 0.15))
 		m.backgroundColor = self.selectionGreen //UIColor.redColor()
-		var indicatorDown = UIImage(named: "indicatorDown")
-		var indicatorUp = UIImage(named: "indicatorUp")
+		let indicatorDown = UIImage(named: "indicatorDown")
+		let indicatorUp = UIImage(named: "indicatorUp")
 		
-		var indicatorDownImageView = UIImageView(image: indicatorDown)
-		var indicatorDownImageSize:CGSize = CGSizeMake(indicatorDownImageView.bounds.width, indicatorDownImageView.bounds.height)
+		let indicatorDownImageView = UIImageView(image: indicatorDown)
+		let indicatorDownImageSize:CGSize = CGSizeMake(indicatorDownImageView.bounds.width, indicatorDownImageView.bounds.height)
 		indicatorDownImageView.frame = CGRectMake(m.bounds.width/2 - indicatorDownImageSize.width/2, 0 - indicatorDownImageSize.height/2, indicatorDownImageSize.width, indicatorDownImageSize.height)
 		m.addSubview(indicatorDownImageView)
 		
-		var indicatorUpImageView = UIImageView(image: indicatorUp)
-		var indicatorUpImageSize:CGSize = CGSizeMake(indicatorUpImageView.bounds.width, indicatorUpImageView.bounds.height)
+		let indicatorUpImageView = UIImageView(image: indicatorUp)
+		let indicatorUpImageSize:CGSize = CGSizeMake(indicatorUpImageView.bounds.width, indicatorUpImageView.bounds.height)
 		indicatorUpImageView.frame = CGRectMake(m.bounds.width/2 - indicatorUpImageSize.width/2, m.bounds.height - indicatorUpImageSize.height/2, indicatorUpImageSize.width, indicatorUpImageSize.height)
 		m.addSubview(indicatorUpImageView)
 		
@@ -122,8 +122,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 		CGContextMoveToPoint(context, 150, 55)
 		CGContextAddLineToPoint(context, 400, 55)
 		
-		var dash:[CGFloat] = [0.0, 50.0]
-		CGContextSetLineCap(context, kCGLineCapSquare)
+		let dash:[CGFloat] = [0.0, 50.0]
+		CGContextSetLineCap(context, CGLineCap.Square)
 		CGContextSetLineDash(context, 0.0, dash, 2)
 		
 		CGContextSetStrokeColorWithColor(context, UIColor.blackColor().CGColor)
@@ -159,7 +159,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 	}
 
 	func selectCurrency(sender:UIButton){
-		println(sender.tag)
+		print(sender.tag)
 	}
 	
 	func textFieldShouldBeginEditing(t: UITextField) -> Bool {
@@ -169,17 +169,17 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 	
 	func textFieldShouldReturn(t:UITextField) -> Bool {   //delegate method
 		t.resignFirstResponder()
-		if(t.text.isEmpty){
+		if(t.text!.isEmpty){
 			self.textFieldOzzieDollars.text = "0"
 			self.textFieldOzzieDollarsFormatted_asString = "0"
 		} else {
-			var currentButtonNumber = self.btnCurrent.tag
-			self.textFieldOzzieDollarsFormatted_asString = self.textFieldOzzieDollars.text
+			let currentButtonNumber = self.btnCurrent.tag
+			self.textFieldOzzieDollarsFormatted_asString = self.textFieldOzzieDollars.text!
 			self.result.text = self.determintExchangeRateValue(
 				CGFloat(NSNumberFormatter().numberFromString(self.textFieldOzzieDollarsFormatted_asString)!),
 				currencySymbol: self.currenciesSymbols[Int(currentButtonNumber)],
 				cashInfo: self.exchangeRates[Int(currentButtonNumber)])
-			self.textFieldOzzieDollars.text = formatEnteredData(t.text, currencySymbol: "$")
+			self.textFieldOzzieDollars.text = formatEnteredData(t.text!, currencySymbol: "$")
 		}
 //		println("Hello: " + formatEnteredData(t.text, currencySymbol: "$"))
 		return true
@@ -194,8 +194,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 		var exchangeAmount_asCGFloat:CGFloat = CGFloat(NSNumberFormatter().numberFromString(enteredData)!)
 		let numberOfPlaces:CGFloat = 2.0
 		let multiplier = pow(10.0, numberOfPlaces)
-		exchangeAmount_asCGFloat = round(exchangeAmount_asCGFloat * multiplier) / multiplier
-		var numberFormatter = NSNumberFormatter()
+		exchangeAmount_asCGFloat = exchangeAmount_asCGFloat * multiplier / multiplier //round(exchangeAmount_asCGFloat * multiplier) / multiplier
+		let numberFormatter = NSNumberFormatter()
 		numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
 		return currencySymbol + numberFormatter.stringFromNumber(exchangeAmount_asCGFloat)!
 	}
@@ -216,27 +216,27 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 		var exchangeAmount_asCGFloat = enteredData * cashInfo.exchangeRate
 		let numberOfPlaces:CGFloat = 2.0
 		let multiplier = pow(10.0, numberOfPlaces)
-		exchangeAmount_asCGFloat = round(exchangeAmount_asCGFloat * multiplier) / multiplier
-		var numberFormatter = NSNumberFormatter()
+		exchangeAmount_asCGFloat = exchangeAmount_asCGFloat * multiplier / multiplier //round(exchangeAmount_asCGFloat * multiplier) / multiplier
+		let numberFormatter = NSNumberFormatter()
 		numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
 		return currencySymbol + numberFormatter.stringFromNumber(exchangeAmount_asCGFloat)!
 	}
 	
 	func scrollViewDidEndDecelerating(scrollView: UIScrollView){
 		// Test the offset and calculate the current page after scrolling ends
-		var pageWidth:CGFloat = CGRectGetWidth(scrollView.frame)
-		var currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
-		var pageWidth1:CGFloat = CGRectGetWidth(self.scrollMaster.frame)
-		var currentPage1:CGFloat = floor((self.scrollMaster.contentOffset.x-pageWidth/2)/pageWidth)+1
+		let pageWidth:CGFloat = CGRectGetWidth(scrollView.frame)
+//		var currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
+//		var pageWidth1:CGFloat = CGRectGetWidth(self.scrollMaster.frame)
+		let currentPage1:CGFloat = floor((self.scrollMaster.contentOffset.x-pageWidth/2)/pageWidth)+1
 		var currentValue:String = ""
-		println("self.textFieldOzzieDollarsFormatted_asString \(self.textFieldOzzieDollarsFormatted_asString) -=- self.textFieldOzzieDollars.text: \(self.textFieldOzzieDollars.text)")
-		if(self.textFieldOzzieDollars.text.isEmpty){
+		print("self.textFieldOzzieDollarsFormatted_asString \(self.textFieldOzzieDollarsFormatted_asString) -=- self.textFieldOzzieDollars.text: \(self.textFieldOzzieDollars.text)")
+		if(self.textFieldOzzieDollars.text!.isEmpty){
 			self.textFieldOzzieDollars.text = "0"
 			self.textFieldOzzieDollarsFormatted_asString = "0"
 		}
 		switch currentPage1 {
 		case 0:
-			println("0 zero")
+			print("0 zero")
 			self.but0Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			//			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
@@ -250,7 +250,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 				currencySymbol: self.currenciesSymbols[Int(currentPage1)],
 				cashInfo: self.getCasholaInfo(self.exchangeRates, currencyName: self.currencies[0]))
 		case 1:
-			println("1 uno")
+			print("1 uno")
 			self.but1Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 //			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
@@ -264,7 +264,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 				currencySymbol: self.currenciesSymbols[Int(currentPage1)],
 				cashInfo: self.getCasholaInfo(self.exchangeRates, currencyName: self.currencies[1]))
 		case 2:
-			println("2 dos")
+			print("2 dos")
 			self.but2Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 //			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
@@ -278,7 +278,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 				currencySymbol: self.currenciesSymbols[Int(currentPage1)],
 				cashInfo: self.getCasholaInfo(self.exchangeRates, currencyName: self.currencies[2]))
 		case 3:
-			println("3 tres")
+			print("3 tres")
 			self.but3Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 //			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
@@ -292,7 +292,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 				currencySymbol: self.currenciesSymbols[Int(currentPage1)],
 				cashInfo: self.getCasholaInfo(self.exchangeRates, currencyName: self.currencies[3]))
 		case 4:
-			println("4")
+			print("4")
 			self.but4Top.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 //			reset colour
 			self.btnCurrent.setTitleColor(UIColor.greenColor(), forState: .Normal)
@@ -306,37 +306,49 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 				currencySymbol: self.currenciesSymbols[Int(currentPage1)],
 				cashInfo: self.getCasholaInfo(self.exchangeRates, currencyName: self.currencies[4]))
 		default:
-			println("Something else")
+			print("Something else")
 		}
-		println("currentValue = \(currentValue)")
+		print("currentValue = \(currentValue)")
 		self.result.text = currentValue
 	}
 	
 	func parseCurrencyInformation(){
-		var postEndpoint: String = "http://api.fixer.io/latest?base=AUD&symbols=CAD,EUR,GBP,JPY,USD"
-		var urlRequest = NSURLRequest(URL: NSURL(string: postEndpoint)!)
+		let postEndpoint: String = "http://api.fixer.io/latest?base=AUD&symbols=CAD,EUR,GBP,JPY,USD"
+		let urlRequest = NSURLRequest(URL: NSURL(string: postEndpoint)!)
 		NSURLConnection.sendAsynchronousRequest(urlRequest, queue: NSOperationQueue(), completionHandler:{
-			(response:NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-			if let anError = error {
+			(response:NSURLResponse?, data: NSData?, error: NSError?) -> Void in
+			if let _ = error {
 				// got an error in getting the data, need to handle it
-				println("error calling GET on /posts/1")
+				print("error calling GET on /posts/1")
 			} else {
 				// parse the result as json, since that's what the API provides
-				var jsonError: NSError?
-				let post = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: &jsonError) as! NSDictionary
-				if let aJSONError = jsonError {
-					// got an error while parsing the data, need to handle it
-					println("error parsing /posts/1")
-				} else {
-					if let items = post["rates"] as? NSDictionary {
-						for item in items {
-							println("key: \(item.key)")
-							println("value: \(item.value)")
-							var c:Cashola = Cashola(currencyName: item.key as! String, exchangeRate: CGFloat(item.value as! NSNumber))
-							self.exchangeRates.append(c)
-						}
-					}
-				}
+//				var jsonError:NSError
+//				let post = try! NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSDictionary
+                do {
+                    let post = try! NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSDictionary
+                    if let items = post["rates"] as? NSDictionary {
+                        for item in items {
+                            print("key: \(item.key)")
+                            print("value: \(item.value)")
+                            let c:Cashola = Cashola(currencyName: item.key as! String, exchangeRate: CGFloat(item.value as! NSNumber))
+                            self.exchangeRates.append(c)
+                        }
+                    }
+                }
+                
+//				if let aJSONError = jsonError {
+//					// got an error while parsing the data, need to handle it
+//					print("error parsing /posts/1 M:parseCurrencyInformation \(aJSONError)")
+//				} else {
+//					if let items = post["rates"] as? NSDictionary {
+//						for item in items {
+//							print("key: \(item.key)")
+//							print("value: \(item.value)")
+//							let c:Cashola = Cashola(currencyName: item.key as! String, exchangeRate: CGFloat(item.value as! NSNumber))
+//							self.exchangeRates.append(c)
+//						}
+//					}
+//				}
 			}
 		})
 	}
@@ -369,12 +381,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 	}
 	
 	func addLogo(){
-		var logoImage = UIImage(named: "logo")
-		var logoImageView = UIImageView(image: logoImage)
-		var logoImageSize:CGSize = CGSizeMake(logoImageView.bounds.width, logoImageView.bounds.height)
+		let logoImage = UIImage(named: "logo")
+		let logoImageView = UIImageView(image: logoImage)
+		let logoImageSize:CGSize = CGSizeMake(logoImageView.bounds.width, logoImageView.bounds.height)
 		logoImageView.frame = CGRectMake(screenSize.width/2 - logoImageSize.width/2, self.status_height, logoImageSize.width, logoImageSize.height)
 		self.view.addSubview(logoImageView)
-		var m:UILabel = UILabel(frame: CGRectMake(0, self.status_height + screenSize.height * 0.15, screenSize.width, 50))
+		let m:UILabel = UILabel(frame: CGRectMake(0, self.status_height + screenSize.height * 0.15, screenSize.width, 50))
 		m.text = "AUD"
 		m.textColor = UIColor.whiteColor()
 		m.backgroundColor = self.masterGreen //UIColor.redColor()
@@ -387,7 +399,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, UITextFieldDelegat
 		var returnValue:Cashola = Cashola(currencyName: "", exchangeRate: -1)
 		for i in 0..<exchangeRates.count {
 			if(currencyName == exchangeRates[i].currencyName){
-				println("curencyName \(exchangeRates[i].currencyName)")
+				print("curencyName \(exchangeRates[i].currencyName)")
 				returnValue.currencyName = exchangeRates[i].currencyName
 				returnValue.exchangeRate = exchangeRates[i].exchangeRate
 			}
