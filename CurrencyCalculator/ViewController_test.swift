@@ -55,18 +55,18 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
 
 	func formatEnteredData(enteredData:String, currencySymbol:String) -> String {
 		let largeNumber = NSNumberFormatter().numberFromString(enteredData)
-		var numberFormatter = NSNumberFormatter()
+		let numberFormatter = NSNumberFormatter()
 		numberFormatter.numberStyle = NSNumberFormatterStyle.DecimalStyle
 		return currencySymbol + numberFormatter.stringFromNumber(largeNumber!)!
 	}
 	
 	func addLogo(){
-		var logoImage = UIImage(named: "logo")
-		var logoImageView = UIImageView(image: logoImage)
-		var logoImageSize:CGSize = CGSizeMake(logoImageView.bounds.width, logoImageView.bounds.height)
+		let logoImage = UIImage(named: "logo")
+		let logoImageView = UIImageView(image: logoImage)
+		let logoImageSize:CGSize = CGSizeMake(logoImageView.bounds.width, logoImageView.bounds.height)
 		logoImageView.frame = CGRectMake(screenSize.width/2 - logoImageSize.width/2, self.status_height, logoImageSize.width, logoImageSize.height)
 		self.view.addSubview(logoImageView)
-		var m:UILabel = UILabel(frame: CGRectMake(0, self.status_height + screenSize.height * 0.1, screenSize.width, 50))
+		let m:UILabel = UILabel(frame: CGRectMake(0, self.status_height + screenSize.height * 0.1, screenSize.width, 50))
 		m.text = "AUS"
 		m.backgroundColor = UIColor.redColor()
 		m.textAlignment = .Center
@@ -97,7 +97,7 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
 	
 	func textFieldShouldReturn(textFieldOzzieDollars: UITextField) -> Bool {   //delegate method
 		textFieldOzzieDollars.resignFirstResponder()
-		println("Hello: " + formatEnteredData(textFieldOzzieDollars.text, currencySymbol: "$"))
+		print("Hello: " + formatEnteredData(textFieldOzzieDollars.text!, currencySymbol: "$"))
 		return true
 	}
 	
@@ -122,8 +122,8 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
 		self.topScrollView.backgroundColor = UIColor.blueColor()
 		self.view.addSubview(self.topScrollView)
 		
-		var offestNumber1:CGFloat = 0
-		var offestNumber2:CGFloat = 0
+//		var offestNumber1:CGFloat = 0
+//		var offestNumber2:CGFloat = 0
 		
 		//		var but1:UIButton = UIButton(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
 		//		but1.backgroundColor = UIColor.orangeColor()
@@ -145,42 +145,42 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
 		//		but4.setTitle("Button Three", forState: UIControlState.Normal)
 		//		self.scrollView.addSubview(but4)
 		//		=========================
-		var but1Top:UIButton = UIButton(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
+		let but1Top:UIButton = UIButton(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
 		but1Top.backgroundColor = UIColor.orangeColor()
 		but1Top.setTitle("Button One", forState: UIControlState.Normal)
 		self.topScrollView.addSubview(but1Top)
 		
-		var but2Top:UIButton = UIButton(frame: CGRectMake(scrollViewWidth, 0,scrollViewWidth, scrollViewHeight))
+		let but2Top:UIButton = UIButton(frame: CGRectMake(scrollViewWidth, 0,scrollViewWidth, scrollViewHeight))
 		but2Top.backgroundColor = UIColor.greenColor()
 		but2Top.setTitle("Button Two", forState: UIControlState.Normal)
 		self.topScrollView.addSubview(but2Top)
 		
-		var but3Top:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*2, 0,scrollViewWidth, scrollViewHeight))
+		let but3Top:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*2, 0,scrollViewWidth, scrollViewHeight))
 		but3Top.backgroundColor = UIColor.redColor()
 		but3Top.setTitle("Button Three", forState: UIControlState.Normal)
 		self.topScrollView.addSubview(but3Top)
 		
-		var but4Top:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
+		let but4Top:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
 		but4Top.backgroundColor = UIColor.yellowColor()
 		but4Top.setTitle("Button Three", forState: UIControlState.Normal)
 		self.topScrollView.addSubview(but4Top)
 		//		=========================
-		var but1a:UIButton = UIButton(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
+		let but1a:UIButton = UIButton(frame: CGRectMake(0, 0,scrollViewWidth, scrollViewHeight))
 		but1a.backgroundColor = UIColor.orangeColor()
 		but1a.setTitle("Button One", forState: UIControlState.Normal)
 		self.markScrollView.addSubview(but1a)
 		
-		var but2a:UIButton = UIButton(frame: CGRectMake(scrollViewWidth, 0,scrollViewWidth, scrollViewHeight))
+		let but2a:UIButton = UIButton(frame: CGRectMake(scrollViewWidth, 0,scrollViewWidth, scrollViewHeight))
 		but2a.backgroundColor = UIColor.greenColor()
 		but2a.setTitle("Button Two", forState: UIControlState.Normal)
 		self.markScrollView.addSubview(but2a)
 		
-		var but3a:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*2, 0,scrollViewWidth, scrollViewHeight))
+		let but3a:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*2, 0,scrollViewWidth, scrollViewHeight))
 		but3a.backgroundColor = UIColor.redColor()
 		but3a.setTitle("Button Three", forState: UIControlState.Normal)
 		self.markScrollView.addSubview(but3a)
 		
-		var but4a:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
+		let but4a:UIButton = UIButton(frame: CGRectMake(scrollViewWidth*3, 0,scrollViewWidth, scrollViewHeight))
 		but4a.backgroundColor = UIColor.yellowColor()
 		but4a.setTitle("Button Three", forState: UIControlState.Normal)
 		self.markScrollView.addSubview(but4a)
@@ -212,14 +212,14 @@ class ViewController_test: UIViewController, UIScrollViewDelegate, UITextFieldDe
     //MARK: UIScrollViewDelegate
     func scrollViewDidEndDecelerating(scrollView: UIScrollView){
         // Test the offset and calculate the current page after scrolling ends
-        var pageWidth:CGFloat = CGRectGetWidth(scrollView.frame)
-        var currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
+        let pageWidth:CGFloat = CGRectGetWidth(scrollView.frame)
+//        var currentPage:CGFloat = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
 		self.markScrollView.contentOffset = CGPoint(x: self.topScrollView.contentOffset.x - 100, y: self.topScrollView.contentOffset.y)
 
 		
-		var pageWidth1:CGFloat = CGRectGetWidth(self.topScrollView.frame)
-		var currentPage1:CGFloat = floor((self.topScrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
-		println("self.topScrollView.contentOffset.x1 \(self.topScrollView.contentOffset.x) -=- currentPage1: \(currentPage1) -=- pageWidth1: \(pageWidth1)")
+		let pageWidth1:CGFloat = CGRectGetWidth(self.topScrollView.frame)
+		let currentPage1:CGFloat = floor((self.topScrollView.contentOffset.x-pageWidth/2)/pageWidth)+1
+		print("self.topScrollView.contentOffset.x1 \(self.topScrollView.contentOffset.x) -=- currentPage1: \(currentPage1) -=- pageWidth1: \(pageWidth1)")
 //		self.topScrollView.contentOffset = CGPoint(x: self.topScrollView.contentOffset.x, y: self.topScrollView.contentOffset.y)
 //		println("self.topScrollView.contentOffset.x2 \(self.topScrollView.contentOffset.x)")
 		
